@@ -1,4 +1,5 @@
 from utils.client_keys import YOUTUBE_API_KEY
+from youtube_dl import YoutubeDL
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
@@ -7,22 +8,32 @@ class YoutubeHandler():
 
     def __init__(self) -> None:
         self.youtube_api = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
+        self.audio_downloader = YoutubeDL(
+            {"format": "bestaudio/best",
+             'outtmpl': 'output/%(title)s.%(ext)s',
+             'postprocessors': [{
+                 'key': 'FFmpegExtractAudio',
+                 'preferredcodec': 'mp3',
+                 'preferredquality': '192'
+             }]})
 
     def search_video(self, search):
         try:
             search_response = self.youtube_api.search().list(
                 q=search,
-                part="id,snippet",
-                maxResults=2
+                part="id",
+                maxResults=1
             ).execute()
 
-            videos = []
+            search_result = search_response.get("items", [])[0]
 
-            for search_result in search_response.get("items", []):
-                if search_result["id"]["kind"] == "youtube#video":
-                    videos.append("%s (%s)" % (search_result["snippet"]["title"],
-                                               search_result["id"]["videoId"]))
-            print("Videos:\n", "\n".join(videos), "\n")
+            if search_result["id"]["kind"] == "youtube#video":
+                return search_result["id"]["videoId"]
+
         except HttpError as e:
             print("An HTTP error %d occurred:\n%s" %
                   (e.resp.status, e.content))
+
+    def download_audio(self, video_id):
+        self.audio_downloader.download(
+            [f"https://www.youtube.com/watch?v={video_id}"])
