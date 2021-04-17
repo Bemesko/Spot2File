@@ -3,23 +3,27 @@ from utils.youtube_handler import YoutubeHandler
 
 
 if __name__ == "__main__":
-
     spotify = SpotifyHandler()
     youtube = YoutubeHandler()
 
-    playlist_name = spotify.get_playlist_name("2I1y0a2GYPdGHlUXW1JPwF")
+    playlist_file = open("playlist_links.txt", "r")
 
-    # very cool playlist if anyone wants some city pop
-    songs = spotify.get_playlist_song_info("2I1y0a2GYPdGHlUXW1JPwF")
+    for link in playlist_file:
 
-    for song in songs:
-        print(f"Searching for {song}...")
-        search_query = song
+        playlist_id = link.split("/")[-1]
 
-        video_id = youtube.search_video(search_query)
+        playlist_name = spotify.get_playlist_name(playlist_id)
 
-        youtube.download_audio(video_id, playlist_name)
+        print(f"Downloading songs from {playlist_name}")
 
-        break
+        songs = spotify.get_playlist_song_info(playlist_id)
+
+        for song in songs:
+            print(f"Searching for {song}...")
+            search_query = song
+
+            video_id = youtube.search_video(search_query)
+
+            youtube.download_audio(video_id, playlist_name)
 
     print("Videos downloaded. Please check the output folder!")
