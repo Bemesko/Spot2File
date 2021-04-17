@@ -12,5 +12,5 @@ A little script a made in order to convert my Spotify playlists to an mp3 format
 - [ ] Read a Spotify playlist link from a file (not essential, do later)
 - [x] Connect to Spotify and retrieve the name of every song in the playlist
 - [x] Search the internet for a link of each song
-- [ ] Check if there's already an mp3 for that song in the folder
+- [ ] Check if there's already an mp3 for that song in the folder (not essential, do later)
 - [ ] Download the song and put it in a folder with the playlist's name

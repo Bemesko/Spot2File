@@ -1,4 +1,4 @@
-import utils.client_keys as client_keys
+from utils.client_keys import CLIENT_ID, CLIENT_SECRET
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
@@ -6,7 +6,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 class SpotifyHandler():
     def __init__(self) -> None:
         auth_manager = SpotifyClientCredentials(
-            client_id=client_keys.CLIENT_ID, client_secret=client_keys.CLIENT_SECRET)
+            client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
         self.spotify_api = spotipy.Spotify(auth_manager=auth_manager)
 
     def get_playlist_song_info(self, playlist_id) -> list:
@@ -16,11 +16,8 @@ class SpotifyHandler():
         while playlist:
             for i, playlist_song in enumerate(playlist['items']):
 
-                playlist_song_info.append({
-                    "name": playlist_song['track']['name'],
-                    "artist": playlist_song['track']['artists'][0]['name']
-                })
-
+                playlist_song_info.append(
+                    f"{playlist_song['track']['artists'][0]['name']} - {playlist_song['track']['name']}")
             if playlist['next']:
                 playlist = self.spotify_api.next(playlist)
             else:
