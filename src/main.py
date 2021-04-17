@@ -7,6 +7,8 @@ if __name__ == "__main__":
     spotify = SpotifyHandler()
     youtube = YoutubeHandler()
 
+    playlist_name = spotify.get_playlist_name("2I1y0a2GYPdGHlUXW1JPwF")
+
     # very cool playlist if anyone wants some city pop
     songs = spotify.get_playlist_song_info("2I1y0a2GYPdGHlUXW1JPwF")
 
@@ -16,7 +18,7 @@ if __name__ == "__main__":
 
         video_id = youtube.search_video(search_query)
 
-        youtube.download_audio(video_id)
+        youtube.download_audio(video_id, playlist_name)
 
         break
 

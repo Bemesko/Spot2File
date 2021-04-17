@@ -14,6 +14,7 @@ class SpotifyHandler():
         playlist_song_info = []
 
         while playlist:
+            # unnecessary enumerate I'm too lazy to fix
             for i, playlist_song in enumerate(playlist['items']):
 
                 playlist_song_info.append(
@@ -24,3 +25,7 @@ class SpotifyHandler():
                 playlist = None
 
         return playlist_song_info
+
+    def get_playlist_name(self, playlist_id) -> str:
+        playlist = self.spotify_api.playlist(playlist_id)
+        return playlist['name']

@@ -8,14 +8,6 @@ class YoutubeHandler():
 
     def __init__(self) -> None:
         self.youtube_api = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
-        self.audio_downloader = YoutubeDL(
-            {"format": "bestaudio/best",
-             'outtmpl': 'output/%(title)s.%(ext)s',
-             'postprocessors': [{
-                 'key': 'FFmpegExtractAudio',
-                 'preferredcodec': 'mp3',
-                 'preferredquality': '192'
-             }]})
 
     def search_video(self, search):
         try:
@@ -34,6 +26,15 @@ class YoutubeHandler():
             print("An HTTP error %d occurred:\n%s" %
                   (e.resp.status, e.content))
 
-    def download_audio(self, video_id):
+    def download_audio(self, video_id, playlist_name):
+        self.audio_downloader = YoutubeDL(
+            {"format": "bestaudio/best",
+             'outtmpl': f'output/{playlist_name}/%(title)s.%(ext)s',
+             'postprocessors': [{
+                 'key': 'FFmpegExtractAudio',
+                 'preferredcodec': 'mp3',
+                 'preferredquality': '192'
+             }]})
+
         self.audio_downloader.download(
             [f"https://www.youtube.com/watch?v={video_id}"])
