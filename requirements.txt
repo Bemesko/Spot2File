@@ -1,10 +1,7 @@
-astroid==2.5.1
-autopep8==1.5.5
-colorama==0.4.4
-isort==5.7.0
-lazy-object-proxy==1.5.2
-mccabe==0.6.1
-pycodestyle==2.6.0
-pylint==2.7.2
-toml==0.10.2
-wrapt==1.12.1
+certifi==2020.12.5
+chardet==4.0.0
+idna==2.10
+requests==2.25.1
+six==1.15.0
+spotipy==2.18.0
+urllib3==1.26.4
