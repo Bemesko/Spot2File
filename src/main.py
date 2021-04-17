@@ -5,11 +5,11 @@ from spotipy.oauth2 import SpotifyClientCredentials
 auth_manager = SpotifyClientCredentials(client_id = client_keys.CLIENT_ID, client_secret=client_keys.CLIENT_SECRET)
 spotify = spotipy.Spotify(auth_manager=auth_manager)
 
-playlists = spotify.user_playlists('bmendoim')
-while playlists:
-    for i, playlist in enumerate(playlists['items']):
-        print(f"{i + 1 + playlists['offset']} {playlist['uri']} {playlist['name']}")
-    if playlists['next']:
-        playlists = spotify.next(playlists)
+playlist = spotify.playlist_items("2I1y0a2GYPdGHlUXW1JPwF")
+while playlist:
+    for i, playlist_song in enumerate(playlist['items']):
+        print(f"{i} - '{playlist_song['track']['name']}' by '{playlist_song['track']['artists'][0]['name']}'")
+    if playlist['next']:
+       playlist = spotify.next(playlist) 
     else:
-        playlists = None
+        playlist = None
