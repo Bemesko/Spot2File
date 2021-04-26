@@ -1,29 +1,37 @@
 from utils.spotify_handler import SpotifyHandler
 from utils.youtube_handler import YoutubeHandler
 
+import argparse
 
-if __name__ == "__main__":
-    spotify = SpotifyHandler()
-    youtube = YoutubeHandler()
+arg_parser = argparse.ArgumentParser()
 
-    playlist_file = open("playlist_links.txt", "r")
+arg_parser.add_argument("-b")
 
-    for link in playlist_file:
+args = arg_parser.parse_args()
 
-        playlist_id = link.split("/")[-1]
+print(args.b)
 
-        playlist_name = spotify.get_playlist_name(playlist_id)
+spotify = SpotifyHandler()
+youtube = YoutubeHandler()
 
-        print(f"Downloading songs from {playlist_name}")
+playlist_file = open("playlist_links.txt", "r")
 
-        songs = spotify.get_playlist_song_info(playlist_id)
+for link in playlist_file:
 
-        for song in songs:
-            print(f"Searching for {song}...")
-            search_query = song
+    playlist_id = link.split("/")[-1]
 
-            video_id = youtube.search_video(search_query)
+    playlist_name = spotify.get_playlist_name(playlist_id)
 
-            youtube.download_audio(video_id, playlist_name)
+    print(f"Downloading songs from {playlist_name}")
 
-    print("Videos downloaded. Please check the output folder!")
+    songs = spotify.get_playlist_song_info(playlist_id)
+
+    for song in songs:
+        print(f"Searching for {song}...")
+        search_query = song
+
+        video_id = youtube.search_video(search_query)
+
+        youtube.download_audio(video_id, playlist_name)
+
+print("Videos downloaded. Please check the output folder!")
