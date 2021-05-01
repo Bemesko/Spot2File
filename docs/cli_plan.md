@@ -6,6 +6,17 @@ the event of me not knowing what to do next.
 
 # Expected Functions
 
+## Input playlist link
+```
+main.py -l [playlist-link] [playlist2-link] ...
+```
+
+### Input file with playlist links?
+
+```
+main.py --input-file [path-to-file]
+```
+
 ## Specify which directory to download the videos in
 
 ```
@@ -16,4 +27,9 @@ main.py -o [directory-path]
 
 ```
 main.py -f [format]
+```
+
+## Set max downloaded songs per playlist
+```
+main.py -m [max-songs]
 ```
