@@ -5,11 +5,19 @@ import argparse
 
 arg_parser = argparse.ArgumentParser()
 
-arg_parser.add_argument("-b")
+arg_parser.add_argument("-l", "--links")
+arg_parser.add_argument("-i", "--input-file")
+arg_parser.add_argument("-o", "--output")
+arg_parser.add_argument("-f", "--format")
+arg_parser.add_argument("-m", "--max-songs")
 
 args = arg_parser.parse_args()
 
-print(args.b)
+print(f"Playlist links = {args.l}")
+print(f"Input file = {args.input_file}")
+print(f"Output directory = {args.o}")
+print(f"Output format = {args.f}")
+print(f"Max songs = {args.m}")
 
 spotify = SpotifyHandler()
 youtube = YoutubeHandler()
